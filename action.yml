@@ -94,4 +94,4 @@ runs:
         echo "summary-result=$check_num" >> $GITHUB_OUTPUT
       env:
         isFail: ${{ steps.check-api.outputs.isFail }}
-        check_num: ${{ steps.check-api.outputs.check_num == '' && '0' || steps.check-api.outputs.check_num }}
+        check_num: ${{ steps.check-api.outputs.check_num }}
