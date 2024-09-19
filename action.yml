@@ -12,6 +12,12 @@ outputs:
   check_num:
     description: "the check result"
     value: ${{ steps.check-api.outputs.check_num }}
+  summary-status:
+    description: 'summary status'
+    value: ${{ steps.get-summary-result.outputs.summary-status }}
+  summary-result:
+    description: 'summary result'
+    value: ${{ steps.get-summary-result.outputs.summary-result }}
 
 runs:
   using: "composite"
@@ -75,3 +81,16 @@ runs:
             echo -e "${logMsgHead}${logMsg1}${resultInfoMsg}${logMsg2}" | tee comment.txt
           fi
         fi
+    - id: get-summary-result
+      shell: bash
+      run: |
+        summary_status="是"
+        if [ "$isFail" == "true" ]; then
+            summary-status="否"
+        fi
+        check_num=$([ "$check_num" == '' ] && echo "0" || echo "$check_num")
+        echo "summary-status=$summary_status" >> $GITHUB_OUTPUT
+        echo "summary-result=$check_num" >> $GITHUB_OUTPUT
+      env:
+        isFail: ${{ steps.check-api.outputs.isFail }}
+        check_num: ${{ steps.check-api.outputs.check_num }}
