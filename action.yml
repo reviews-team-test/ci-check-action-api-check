@@ -81,6 +81,8 @@ runs:
             echo -e "${logMsgHead}${logMsg1}${resultInfoMsg}${logMsg2}" | tee comment.txt
           fi
         fi
+    - if: always()
+      uses: csexton/debugger-action@master
     - id: get-summary-result
       if: always()
       shell: bash
