@@ -70,10 +70,10 @@ runs:
         ``` 
         </details>
         '''
-        resultInfoMsg=$(cat api_check.txt)
         detailUrl="https://github.com/reviews-team-test/infra-settings/blob/master/services/prow/config/jobs/images/api-check/readme.md"
         logMsgHead="> [!WARNING]\n> [[API接口检查]]($detailUrl)\n- 检测到存在对外接口删除和修改"
         if [ -e 'api_check.txt' ];then
+          resultInfoMsg=$(cat api_check.txt)
           check_num=$(cat api_check.txt | grep -c '\[Chg_exprort_fun\|\[Del_export_fun' || true)
           if [ $check_num -gt 0 ];then
             echo "isFail=true" >> $GITHUB_OUTPUT
@@ -82,6 +82,7 @@ runs:
           fi
         fi
     - id: get-summary-result
+      if: always()
       shell: bash
       run: |
         summary_status="是"
