@@ -59,7 +59,7 @@ runs:
     - id: check-api
       shell: bash
       run: |
-        $GITHUB_ACTION_PATH/deepin-abigail -c $GITHUB_ACTION_PATH/fastFilesCompare.json | tee api_check.txt || true
+        $GITHUB_ACTION_PATH/deepin-abigail -c $GITHUB_ACTION_PATH/fastFilesCompare.json | tee api_check.txt
         logMsg1='''
         <details>
           <summary>详情</summary>
@@ -81,8 +81,6 @@ runs:
             echo -e "${logMsgHead}${logMsg1}${resultInfoMsg}${logMsg2}" | tee comment.txt
           fi
         fi
-    - if: always()
-      uses: csexton/debugger-action@master
     - id: get-summary-result
       if: always()
       shell: bash
